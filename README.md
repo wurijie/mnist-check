@@ -19,7 +19,7 @@ pip3 install -r requirements.txt
   
 **训练模型**
 ```
-python my_mnist.py
+python my_mnist.py train
 ```
 
 **启动网站**
