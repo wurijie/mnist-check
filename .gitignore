@@ -1,0 +1,9 @@
+/env
+/.gitignore
+/temp.png
+/.idea
+/*.pyc
+/.DS_Store
+/mnist/.DS_Store
+/mnist/MNIST/.DS_Store
+/__pycache__

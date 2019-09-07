@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>在线画板</title>
+<script src="https://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+
+<style type="text/css">
+	#board{ 
+		border:1px solid #ccc;
+	}
+	.result{
+		position: absolute;
+		top: 8px;
+		left: 295px;
+	}
+</style>
+</head>
+<body>
+<canvas id="board" width="280" height="280"></canvas>
+<div class="result">
+	识别结果为： <b id="number"></b>
+</div>
+<button id="check">识别</button>
+<button id="clear">清空</button>
+ 
+<script type="text/javascript">
+ var canvas = document.getElementById('board');
+ var canvasBoard=canvas.getContext("2d");
+	 canvasBoard.lineWidth=10
+	 canvasBoard.fillStyle= "black";
+	 canvasBoard.strokeStyle="white";
+	 canvasBoard.fillRect(0,0,500,400)
+	 
+ var painting=false;
+ 
+$("#board").mousedown(function(e){
+ 
+  var mouseX = e.pageX - this.offsetLeft;
+  var mouseY = e.pageY - this.offsetTop; 
+  
+  painting=true;
+  canvasBoard.moveTo(mouseX,mouseY); //起始位置
+  
+});
+ 
+$("#board").mouseup(function(e){
+   painting=false;
+});
+ 
+$("#board").mousemove(function(e){
+  var mouseX = e.pageX - this.offsetLeft;
+  var mouseY = e.pageY - this.offsetTop; 
+ 
+	if(painting){
+		canvasBoard.lineTo(mouseX,mouseY); //终止位置
+		canvasBoard.stroke();				//结束图形
+	}
+  
+});
+
+$("#clear").click(()=>{
+	canvasBoard.beginPath()
+	canvasBoard.fillRect(0,0,500,400)
+	canvasBoard.closePath()
+})
+
+$("#check").click(()=>{
+	let saveImage = canvas.toDataURL('iamge/png')
+
+	$.post('cnn', {
+		img: saveImage
+	}, function(data){
+		$("#number").text(data)
+		console.log(data)
+	})
+})
+ 
+</script>
+</body>
+ 
+</html>
