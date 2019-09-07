@@ -14,7 +14,7 @@ Python环境 Python3.6
 **安装依赖包**  
 进入项目目录执行  
 ```
-pip install -r requirement.txt
+pip3 install -r requirements.txt
 ```  
   
 **训练模型**
